@@ -152,7 +152,7 @@
 (general-define-key "<f2> u" 'counsel-unicode-char)
 (general-define-key "C-c g" 'counsel-git)
 (general-define-key "C-c j" 'counsel-git-grep)
-(general-define-key "C-c k" 'counsel-ag)
+(general-define-key "C-c k" 'counsel-rg)
 (general-define-key "C-x l" 'counsel-locate)
 (general-define-key "C-S-o" 'counsel-rhythmbox)
 (general-define-key "M-s i" 'counsel-imenu)
@@ -186,7 +186,7 @@
   "wsv" '(split-window-right :which-key "split right")
   "s" '(:ignore t :which-key "search")
   "sb" '(swiper :which-key "search buffer")
-  "sp" '(counsel-ag :which-key "search dir")
+  "sp" '(counsel-rg :which-key "search dir")
   ":" '(counsel-M-x :which-key "M-x"))
 
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
