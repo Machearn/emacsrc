@@ -1,0 +1,6 @@
+auto-save-list/
+elpa/
+transient/
+*.el~
+recentf
+smex-items
