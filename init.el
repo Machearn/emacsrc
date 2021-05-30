@@ -62,7 +62,6 @@
       (package-install pkg))))
 
 
-
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
@@ -215,6 +214,18 @@
 (global-evil-surround-mode t)
 
 (evilnc-default-hotkeys)
+
+
+
+(when (eq system-type 'darwin)
+  (setq mac-option-modifier 'super)
+  (setq mac-command-modifier 'meta)
+  (setq mac-right-option-modifier 'none)
+  (general-define-key "M-c" 'kill-ring-save)
+  (general-define-key "M-x" 'kill-region)
+  (general-define-key "M-v" 'yank)
+  (general-define-key "M-a" 'mark-whole-buffer)
+  (general-define-key "M-z" 'undo))
 
 
 
