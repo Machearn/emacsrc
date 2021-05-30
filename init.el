@@ -123,7 +123,8 @@
   ;; :prefix local leader
   :prefix "M-s")
 (my-local-leader-def
-  "o" 'occur-dwim)
+  "o" 'occur-dwim
+  "i" 'counsel-imenu)
 (my-leader-def
   :keymaps 'occur-mode-map
   "e" 'occur-edit-mode)
@@ -155,9 +156,7 @@
 (general-define-key "C-c k" 'counsel-rg)
 (general-define-key "C-x l" 'counsel-locate)
 (general-define-key "C-S-o" 'counsel-rhythmbox)
-(general-define-key "M-s i" 'counsel-imenu)
 (general-define-key "C-x C-o" 'ivy-occur)
-(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
 (my-leader-def
   "f" '(:ignore t :which-key "file")
@@ -167,7 +166,7 @@
   "b" '(:ignore t :which-key "buffer")
   "bk" '(kill-buffer :which-key "kill buffer")
   "bd" '(kill-current-buffer :which-key "kill current buffer")
-  "bb" '(switch-to-buffer :which-key "switch buffer")
+  "bb" '(counsel-ibuffer :which-key "switch buffer")
   "bn" '(switch-to-next-buffer :which-key "next buffer")
   "bp" '(switch-to-prev-buffer :which-key "prev buffer")
   "w" '(:ignore t :which-key "window")
@@ -187,6 +186,8 @@
   "s" '(:ignore t :which-key "search")
   "sb" '(swiper :which-key "search buffer")
   "sp" '(counsel-rg :which-key "search dir")
+  "g" '(:ignore t :which-key "magit")
+  "gg" '(magit-status :which-key "magit status")
   ":" '(counsel-M-x :which-key "M-x"))
 
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
