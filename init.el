@@ -222,6 +222,12 @@
 (when (eq system-type 'darwin)
   (setq mac-option-modifier 'super)
   (setq mac-command-modifier 'meta)
+  (general-define-key "s-c" 'kill-ring-save)
+  (general-define-key "s-x" 'kill-region)
+  (general-define-key "s-v" 'yank)
+  (general-define-key "s-a" 'mark-whole-buffer)
+  (general-define-key "s-z" 'undo)
+  (general-define-key "s-s" 'save-buffer)
   (set-face-attribute 'default nil
 		    :family "Ubuntu Mono"
 		    :height 180
