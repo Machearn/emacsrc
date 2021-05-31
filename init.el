@@ -163,6 +163,7 @@
   "ff" '(counsel-find-file :which-key "find file")
   "fp" '(open-init-file :which-key "init file")
   "fz" '(counsel-fzf :which-key "fzf")
+  "fg" '(counsel-git :which-key "git project")
   "b" '(:ignore t :which-key "buffer")
   "bk" '(kill-buffer :which-key "kill buffer")
   "bd" '(kill-current-buffer :which-key "kill current buffer")
