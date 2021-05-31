@@ -3,6 +3,10 @@
 
 * Introduction
   This config has not added support for programming language and not optimized for MacOS(so only on Linux). Keep updating...
+* Prerequisites
+  - Git
+  - Emacs(27.2 is recommended)
+  - ripgerp
 * Install
   #+begin_src shell
   git clone https://github.com/Machearn/emacsrc.git ~/.emacs.d
