@@ -30,6 +30,14 @@
 	    (add-hook 'minibuffer-setup-hook #'machearn/mimibuffer-setup-hook)
 	    (add-hook 'minibuffer-exit-hook #'machearn/minibuffer-exit-hook)))
 
+;; HACK: DO NOT copy package-selected-packages to custom file forcibly.
+;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
+(defun machearn/save-selected-packages (&optional value)
+  "Set `package-selected-packages' to VALUE but don't save to `custom-file'."
+  (when value
+    (setq package-selected-packages value)))
+(advice-add 'package--save-selected-packages :override #'machearn/save-selected-packages)
+
 (when (not (package-installed-p 'use-package))
   (package-refresh-contents)
   (package-install 'use-package))
