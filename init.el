@@ -46,6 +46,8 @@
 (use-package diminish)
 (use-package bind-key)
 
+(use-package gnu-elpa-keyring-update)
+
 (require 'cl)
 
 (defvar machearn/custom-packages '(
