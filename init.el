@@ -30,6 +30,22 @@
 	    (add-hook 'minibuffer-setup-hook #'machearn/mimibuffer-setup-hook)
 	    (add-hook 'minibuffer-exit-hook #'machearn/minibuffer-exit-hook)))
 
+(when (not (package-installed-p 'use-package))
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-and-compile
+  (setq use-package-always-ensure t)
+  (setq use-package-always-defer t)
+  (setq use-package-expand-minimally t)
+  (setq use-package-enable-imenu-support t))
+
+(eval-when-compile
+  (require 'use-package))
+
+(use-package diminish)
+(use-package bind-key)
+
 (require 'cl)
 
 (defvar machearn/custom-packages '(
