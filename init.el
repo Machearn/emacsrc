@@ -136,7 +136,8 @@
 
 (add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
 (setq popwin:popup-window-position 'right)
-(setq popwin:popup-window-width '90)
+(setq popwin:popup-window-width '75)
+(setq-default fill-column '100)
 
 
 
@@ -245,6 +246,7 @@
   ":" '(counsel-M-x :which-key "M-x"))
 
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 
 (require 'smartparens-config)
 (add-hook 'prog-mode-hook #'smartparens-mode)
@@ -269,6 +271,8 @@
 (global-evil-surround-mode t)
 
 (evilnc-default-hotkeys)
+
+(general-define-key "C-c f" 'company-files)
 
 
 
