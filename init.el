@@ -56,41 +56,6 @@
 
 (use-package gnu-elpa-keyring-update)
 
-(require 'cl)
-
-(defvar machearn/custom-packages '(
-			  company
-			  solarized-theme
-			  evil
-			  evil-surround
-			  evil-nerd-commenter
-			  hungry-delete
-			  key-chord
-			  evil-terminal-cursor-changer
-			  ivy
-			  swiper
-			  counsel
-			  smartparens
-			  rainbow-delimiters
-			  popwin
-			  expand-region
-			  general
-			  iedit
-			  wgrep
-			  doom-modeline
-			  doom-themes
-			  window-numbering
-			  which-key
-			  magit
-			  )  "Default packages")
-
-(setq package-selected-packages machearn/custom-packages)
-
-(defun machearn/custom-packages-installed-p ()
-  (loop for pkg in machearn/custom-packages
-	when (not (package-installed-p pkg)) do (return nil)
-	finally (return t)))
-
 (defun occur-dwim ()
   (interactive)
   (push (if (region-active-p)
@@ -107,23 +72,17 @@
   (interactive)
   (find-file "~/.emacs.d/init.el"))
 
-(unless (machearn/custom-packages-installed-p)
-  (message "%s" "Refreshing package database...")
-  (package-refresh-contents)
-  (dolist (pkg machearn/custom-packages)
-    (when (not (package-installed-p pkg))
-      (package-install pkg))))
 
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (delete-selection-mode t)
-(window-numbering-mode t)
 
-(global-linum-mode t)
+(global-display-line-numbers-mode t)
 (global-hl-line-mode t)
 
+(setq display-line-numbers-type 'relative)
 (setq make-backup-files nil)
 (setq inhibit-splash-screen t)
 (setq initial-frame-alist (quote ((fullscreen . maximized))))
@@ -135,33 +94,130 @@
 		    :width 'normal)
 
 (add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
-(setq popwin:popup-window-position 'right)
-(setq popwin:popup-window-width '75)
 (setq-default fill-column '100)
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 
 
 
-(load-theme 'doom-solarized-dark t)
+(use-package general)
 
-(global-company-mode t)
-(which-key-mode t)
+(use-package doom-themes
+  :demand t
+  :config
+  (load-theme 'doom-solarized-dark t))
 
-(require 'hungry-delete)
-(global-hungry-delete-mode t)
+(use-package company
+  :demand t
+  :config
+  (global-company-mode t)
+  :bind
+  ("C-c f" . 'company-files))
 
-(require 'evil)
-(evil-mode t)
-(unless (display-graphic-p)
-  (require 'evil-terminal-cursor-changer)
-  (evil-terminal-cursor-changer-activate))
-(setq evil-motion-state-cursor 'box)
-(setq evil-visual-state-cursor 'box)
-(setq evil-normal-state-cursor 'box)
-(setq evil-insert-state-cursor 'bar)
-(setq evil-emacs-state-cursor  'hbar)
-(evil-set-initial-state 'occur-mode 'normal)
+(use-package which-key
+  :demand t
+  :config
+  (which-key-mode t))
 
-(require 'general)
+(use-package popwin
+  :config
+  (popwin-mode)
+  (setq popwin:popup-window-position 'right
+	popwin:popup-window-width 0.4))
+
+(use-package magit)
+
+(use-package evil
+  :demand t
+  :config
+  (evil-mode t)
+  (setq evil-motion-state-cursor 'box)
+  (setq evil-visual-state-cursor 'box)
+  (setq evil-normal-state-cursor 'box)
+  (setq evil-insert-state-cursor 'bar)
+  (setq evil-emacs-state-cursor  'hbar)
+  (evil-set-initial-state 'occur-mode 'normal)
+  (unless (display-graphic-p)
+    (use-package evil-terminal-cursor-changer
+      :config
+      (evil-terminal-cursor-changer-activate))))
+
+(use-package evil-surround
+  :config
+  (global-evil-surround-mode))
+
+(use-package evil-nerd-commenter)
+(evilnc-default-hotkeys)
+
+(use-package key-chord
+  :config
+  (key-chord-mode t))
+(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+
+(use-package ivy
+  :config
+  (ivy-mode)
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  (setq ivy-height 15)
+  (evil-set-initial-state 'ivy-occur-grep-mode 'normal)
+  :bind (("C-c C-r" . 'ivy-resume)
+	 ("C-x C-o" . 'ivy-occur)))
+
+(use-package counsel
+  :bind (("M-x" . 'counsel-M-x)
+	 ("C-x C-f" . 'counsel-find-file)
+	 ("C-x C-S-f" . 'counsel-fzf)
+	 ("C-x C-b" . 'counsel-ibuffer)
+	 ("<f1> f" . 'counsel-describe-function)
+	 ("<f1> v" . 'counsel-describe-variable)
+	 ("<f1> o" . 'counsel-describe-symbol)
+	 ("<f1> l" . 'counsel-find-library)
+	 ("<f2> i" . 'counsel-info-lookup-symbol)
+	 ("<f2> u" . 'counsel-unicode-char)
+	 ("C-c g" . 'counsel-git)
+	 ("C-c j" . 'counsel-git-grep)
+	 ("C-c k" . 'counsel-rg)
+	 ("C-x l" . 'counsel-locate)
+	 ("C-S-o" . 'counsel-rhythmbox)))
+
+(use-package swiper
+  :bind (("C-s" . 'swiper)))
+
+(use-package smartparens
+  :config
+  (require 'smartparens-config)
+  (smartparens-global-mode t)
+  (smartparens-global-strict-mode t)
+  :hook ((prog-mode . smartparens-mode)))
+
+(use-package rainbow-delimiters
+  :hook ((prog-mode) . rainbow-delimiters-mode))
+
+(use-package expand-region
+  :demand t
+  :after evil
+  :config
+  (setq expand-region-contract-fast-key "j")
+  :bind (:map evil-visual-state-map
+	      ("KK" . er/expand-region)))
+
+(use-package iedit
+  :bind (("M-s e" . 'iedit-mode)))
+
+(use-package wgrep)
+
+(use-package doom-modeline
+  :demand t
+  :config
+  (doom-modeline-mode t))
+
+(use-package window-numbering
+  :demand t
+  :config
+  (window-numbering-mode t))
+
+
+
 (general-define-key
  "<f5>" 'open-init-file)
 (general-define-key
@@ -174,7 +230,6 @@
   :prefix "<SPC>"
   :non-normal-prefix "C-,")
 (general-create-definer my-local-leader-def
-  ;; :prefix local leader
   :prefix "M-s")
 (my-local-leader-def
   "o" 'occur-dwim
@@ -182,35 +237,6 @@
 (my-leader-def
   :keymaps 'occur-mode-map
   "e" 'occur-edit-mode)
-
-(require 'key-chord)
-(key-chord-mode t)
-(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-
-(ivy-mode)
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
-(setq ivy-height 15)
-(evil-set-initial-state 'ivy-occur-grep-mode 'normal)
-(general-define-key "C-s" 'swiper)
-(general-define-key "C-c C-r" 'ivy-resume)
-(general-define-key "<f6>" 'ivy-resume)
-(general-define-key "M-x" 'counsel-M-x)
-(general-define-key "C-x C-f" 'counsel-find-file)
-(general-define-key "C-x C-S-f" 'counsel-fzf)
-(general-define-key "C-x C-b" 'counsel-ibuffer)
-(general-define-key "<f1> f" 'counsel-describe-function)
-(general-define-key "<f1> v" 'counsel-describe-variable)
-(general-define-key "<f1> o" 'counsel-describe-symbol)
-(general-define-key "<f1> l" 'counsel-find-library)
-(general-define-key "<f2> i" 'counsel-info-lookup-symbol)
-(general-define-key "<f2> u" 'counsel-unicode-char)
-(general-define-key "C-c g" 'counsel-git)
-(general-define-key "C-c j" 'counsel-git-grep)
-(general-define-key "C-c k" 'counsel-rg)
-(general-define-key "C-x l" 'counsel-locate)
-(general-define-key "C-S-o" 'counsel-rhythmbox)
-(general-define-key "C-x C-o" 'ivy-occur)
 
 (my-leader-def
   "f" '(:ignore t :which-key "file")
@@ -244,35 +270,6 @@
   "g" '(:ignore t :which-key "magit")
   "gg" '(magit-status :which-key "magit status")
   ":" '(counsel-M-x :which-key "M-x"))
-
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
-
-(require 'smartparens-config)
-(add-hook 'prog-mode-hook #'smartparens-mode)
-
-(require 'popwin)
-(popwin-mode t)
-
-(require 'expand-region)
-(with-eval-after-load 'evil
-  (setq expand-region-contract-fast-key "j"))
-(general-define-key :keymaps 'visual "KK" 'er/expand-region)
-
-(require 'iedit)
-(my-local-leader-def
-  "e" 'iedit-mode)
-
-(require 'doom-modeline)
-(doom-modeline-mode t)
-(setq doom-modeline-minor-modes t)
-
-(require 'evil-surround)
-(global-evil-surround-mode t)
-
-(evilnc-default-hotkeys)
-
-(general-define-key "C-c f" 'company-files)
 
 
 
