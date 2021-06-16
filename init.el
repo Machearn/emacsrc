@@ -53,6 +53,9 @@
 
 (use-package diminish)
 (use-package bind-key)
+(use-package use-package-chords
+  :demand t
+  :config (key-chord-mode 1))
 
 (use-package gnu-elpa-keyring-update)
 
@@ -116,7 +119,8 @@
 (use-package which-key
   :demand t
   :config
-  (which-key-mode t))
+  (which-key-mode t)
+  (setq which-key-idle-delay 0.5))
 
 (use-package popwin
   :config
@@ -139,19 +143,15 @@
   (unless (display-graphic-p)
     (use-package evil-terminal-cursor-changer
       :config
-      (evil-terminal-cursor-changer-activate))))
+      (evil-terminal-cursor-changer-activate)))
+  :chords (("jk" . evil-normal-state)))
 
 (use-package evil-surround
   :config
-  (global-evil-surround-mode))
+  (global-evil-surround-mode t))
 
 (use-package evil-nerd-commenter)
 (evilnc-default-hotkeys)
-
-(use-package key-chord
-  :config
-  (key-chord-mode t))
-(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 
 (use-package ivy
   :config
@@ -187,7 +187,6 @@
   :config
   (require 'smartparens-config)
   (smartparens-global-mode t)
-  (smartparens-global-strict-mode t)
   :hook ((prog-mode . smartparens-mode)))
 
 (use-package rainbow-delimiters
@@ -216,6 +215,11 @@
   :config
   (window-numbering-mode t))
 
+(use-package git-gutter
+  :demand t
+  :config
+  (global-git-gutter-mode t))
+
 
 
 (general-define-key
@@ -225,6 +229,9 @@
  :keymaps 'occur-mode-map
  "C-x C-q" 'occur-edit-mode)
 (general-define-key :states 'normal "U" 'evil-redo)
+(general-define-key :states '(normal visual emacs) "[b" 'previous-buffer)
+(general-define-key :states '(normal visual emacs) "]b" 'next-buffer)
+(general-define-key :states 'normal "C-u" 'evil-scroll-up)
 (general-create-definer my-leader-def
   :states '(normal insert visual emacs)
   :prefix "<SPC>"
@@ -269,6 +276,7 @@
   "sp" '(counsel-rg :which-key "search dir")
   "g" '(:ignore t :which-key "magit")
   "gg" '(magit-status :which-key "magit status")
+  "u" '(universal-argument :which-key "universal argument")
   ":" '(counsel-M-x :which-key "M-x"))
 
 
