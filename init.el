@@ -147,11 +147,15 @@
   :chords (("jk" . evil-normal-state)))
 
 (use-package evil-surround
+  :demand t
+  :after evil
   :config
   (global-evil-surround-mode t))
 
-(use-package evil-nerd-commenter)
-(evilnc-default-hotkeys)
+(use-package evil-nerd-commenter
+  :demand t
+  :after evil
+  :config (evilnc-default-hotkeys))
 
 (use-package ivy
   :config
