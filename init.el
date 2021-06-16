@@ -170,7 +170,7 @@
 (use-package counsel
   :bind (("M-x" . 'counsel-M-x)
 	 ("C-x C-f" . 'counsel-find-file)
-	 ("C-x C-S-f" . 'counsel-fzf)
+	 ("C-x C-M-f" . 'counsel-fzf)
 	 ("C-x C-b" . 'counsel-ibuffer)
 	 ("<f1> f" . 'counsel-describe-function)
 	 ("<f1> v" . 'counsel-describe-variable)
