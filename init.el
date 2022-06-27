@@ -137,6 +137,8 @@
 
 (use-package magit)
 
+(use-package treemacs)
+
 (use-package evil
   :demand t
   :config
@@ -152,6 +154,10 @@
       :config
       (evil-terminal-cursor-changer-activate)))
   :chords (("jk" . evil-normal-state)))
+
+(use-package treemacs-evil)
+
+(use-package treemacs-magit)
 
 (use-package evil-surround
   :demand t
