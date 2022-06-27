@@ -73,7 +73,7 @@
 
 (defun open-init-file()
   (interactive)
-  (find-file "~/.emacs.d/init.el"))
+  (find-file "~/.config/emacs/init.el"))
 
 
 
