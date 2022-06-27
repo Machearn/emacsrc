@@ -5,3 +5,4 @@ transient/
 recentf
 smex-items
 .lsp-session-v1
+.cache/
