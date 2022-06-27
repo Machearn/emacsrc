@@ -251,6 +251,17 @@
    (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 
+(use-package lsp-ui
+  :config
+  (lsp-ui-mode t)
+  :commands lsp-ui-mode)
+
+(use-package lsp-ivy
+  :commands lsp-ivy-workspace-symbol)
+
+(use-package lsp-treemacs
+  :commands lsp-treemacs-errors-list)
+
 
 (general-define-key
  "<f5>" 'open-init-file)
