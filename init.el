@@ -237,6 +237,14 @@
   :config
   (global-git-gutter-mode t))
 
+(use-package lsp-mode
+  :init
+  (setq lsp-keymap-prefix "C-l")
+  :hook
+  ((c++-mode . lsp)
+   (c-mode . lsp)
+   (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
 
 
 (general-define-key
