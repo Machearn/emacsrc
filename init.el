@@ -169,6 +169,17 @@
   :bind (("C-c C-r" . 'ivy-resume)
 	 ("C-x C-o" . 'ivy-occur)))
 
+(use-package ivy-posframe
+  :init
+  (setq ivy-posframe-display-functions-alist
+      '((swiper          . ivy-posframe-display-at-frame-center)
+        (complete-symbol . ivy-posframe-display-at-point)
+        (counsel-M-x     . ivy-posframe-display-at-frame-center)
+	(counsel-find-file . ivy-posframe-display-at-frame-center)
+	(ivy-switch-buffer . ivy-posframe-display-at-frame-center)
+        (t               . ivy-posframe-display)))
+  (ivy-posframe-mode 1))
+
 (use-package counsel
   :bind (("M-x" . 'counsel-M-x)
 	 ("C-x C-f" . 'counsel-find-file)
