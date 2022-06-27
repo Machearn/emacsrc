@@ -13,22 +13,22 @@
       gc-cons-percentage 0.5)
 
 (add-hook 'emacs-startup-hook
-	  (lambda ()
-	    (setq file-name-handler-alist default/file-name-handler-alist)
-	    (setq gc-cons-threshold machearn/gc-cons-threshold
-		  gc-cons-percentage 0.1)
-	    (if (boundp 'after-focus-change-function)
-		(add-function :after after-focus-change-function
-			      (lambda ()
-				(unless (frame-focus-state)
-				  (garbage-collect))))
-	      (add-hook 'focus-out-hook 'garbage-collect))
-	    (defun machearn/mimibuffer-setup-hook ()
-	      (setq gc-cons-threshold machearn/gc-cons-upper-limit))
-	    (defun machearn/minibuffer-exit-hook ()
-	      (setq gc-cons-threshold machearn/gc-cons-threshold))
-	    (add-hook 'minibuffer-setup-hook #'machearn/mimibuffer-setup-hook)
-	    (add-hook 'minibuffer-exit-hook #'machearn/minibuffer-exit-hook)))
+          (lambda ()
+            (setq file-name-handler-alist default/file-name-handler-alist)
+            (setq gc-cons-threshold machearn/gc-cons-threshold
+                  gc-cons-percentage 0.1)
+            (if (boundp 'after-focus-change-function)
+                (add-function :after after-focus-change-function
+                              (lambda ()
+                                (unless (frame-focus-state)
+                                  (garbage-collect))))
+              (add-hook 'focus-out-hook 'garbage-collect))
+            (defun machearn/mimibuffer-setup-hook ()
+              (setq gc-cons-threshold machearn/gc-cons-upper-limit))
+            (defun machearn/minibuffer-exit-hook ()
+              (setq gc-cons-threshold machearn/gc-cons-threshold))
+            (add-hook 'minibuffer-setup-hook #'machearn/mimibuffer-setup-hook)
+            (add-hook 'minibuffer-exit-hook #'machearn/minibuffer-exit-hook)))
 
 ;; HACK: DO NOT copy package-selected-packages to custom file forcibly.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
@@ -62,13 +62,13 @@
 (defun occur-dwim ()
   (interactive)
   (push (if (region-active-p)
-	    (buffer-substring-no-properties
-	     (region-beginning)
-	     (region-end))
-	  (let ((sym (thing-at-point 'symbol)))
-	    (when (stringp sym)
-	      (regexp-quote sym))))
-	regexp-history)
+            (buffer-substring-no-properties
+             (region-beginning)
+             (region-end))
+          (let ((sym (thing-at-point 'symbol)))
+            (when (stringp sym)
+              (regexp-quote sym))))
+        regexp-history)
   (call-interactively 'occur))
 
 (defun open-init-file()
@@ -91,10 +91,10 @@
 (setq initial-frame-alist (quote ((fullscreen . maximized))))
 (setq ring-bell-function 'ignore)
 (set-face-attribute 'default nil
-		    :family "Ubuntu Mono"
-		    :height 150
-		    :weight 'normal
-		    :width 'normal)
+                    :family "Ubuntu Mono"
+                    :height 150
+                    :weight 'normal
+                    :width 'normal)
 
 (add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
 (setq-default fill-column '100)
@@ -128,7 +128,7 @@
   :config
   (popwin-mode)
   (setq popwin:popup-window-position 'right
-	popwin:popup-window-width 0.4))
+        popwin:popup-window-width 0.4))
 
 (use-package magit)
 
@@ -167,7 +167,7 @@
   (setq ivy-height 15)
   (evil-set-initial-state 'ivy-occur-grep-mode 'normal)
   :bind (("C-c C-r" . 'ivy-resume)
-	 ("C-x C-o" . 'ivy-occur)))
+         ("C-x C-o" . 'ivy-occur)))
 
 (use-package ivy-posframe
   :init
@@ -175,27 +175,27 @@
       '((swiper          . ivy-posframe-display-at-frame-center)
         (complete-symbol . ivy-posframe-display-at-point)
         (counsel-M-x     . ivy-posframe-display-at-frame-center)
-	(counsel-find-file . ivy-posframe-display-at-frame-center)
-	(ivy-switch-buffer . ivy-posframe-display-at-frame-center)
+        (counsel-find-file . ivy-posframe-display-at-frame-center)
+        (ivy-switch-buffer . ivy-posframe-display-at-frame-center)
         (t               . ivy-posframe-display)))
   (ivy-posframe-mode 1))
 
 (use-package counsel
   :bind (("M-x" . 'counsel-M-x)
-	 ("C-x C-f" . 'counsel-find-file)
-	 ("C-x C-M-f" . 'counsel-fzf)
-	 ("C-x C-b" . 'counsel-ibuffer)
-	 ("<f1> f" . 'counsel-describe-function)
-	 ("<f1> v" . 'counsel-describe-variable)
-	 ("<f1> o" . 'counsel-describe-symbol)
-	 ("<f1> l" . 'counsel-find-library)
-	 ("<f2> i" . 'counsel-info-lookup-symbol)
-	 ("<f2> u" . 'counsel-unicode-char)
-	 ("C-c g" . 'counsel-git)
-	 ("C-c j" . 'counsel-git-grep)
-	 ("C-c k" . 'counsel-rg)
-	 ("C-x l" . 'counsel-locate)
-	 ("C-S-o" . 'counsel-rhythmbox)))
+         ("C-x C-f" . 'counsel-find-file)
+         ("C-x C-M-f" . 'counsel-fzf)
+         ("C-x C-b" . 'counsel-ibuffer)
+         ("<f1> f" . 'counsel-describe-function)
+         ("<f1> v" . 'counsel-describe-variable)
+         ("<f1> o" . 'counsel-describe-symbol)
+         ("<f1> l" . 'counsel-find-library)
+         ("<f2> i" . 'counsel-info-lookup-symbol)
+         ("<f2> u" . 'counsel-unicode-char)
+         ("C-c g" . 'counsel-git)
+         ("C-c j" . 'counsel-git-grep)
+         ("C-c k" . 'counsel-rg)
+         ("C-x l" . 'counsel-locate)
+         ("C-S-o" . 'counsel-rhythmbox)))
 
 (use-package swiper
   :bind (("C-s" . 'swiper)))
@@ -215,7 +215,7 @@
   :config
   (setq expand-region-contract-fast-key "j")
   :bind (:map evil-visual-state-map
-	      ("KK" . er/expand-region)))
+         ("KK" . er/expand-region)))
 
 (use-package iedit
   :bind (("M-s e" . 'iedit-mode)))
@@ -316,10 +316,10 @@
   (general-define-key "s-z" 'undo)
   (general-define-key "s-s" 'save-buffer)
   (set-face-attribute 'default nil
-		    :family "Ubuntu Mono"
-		    :height 180
-		    :weight 'normal
-		    :width 'normal))
+                      :family "Ubuntu Mono"
+                      :height 180
+                      :weight 'normal
+                      :width 'normal))
 
 
 
