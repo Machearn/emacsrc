@@ -242,6 +242,11 @@
   :config
   (global-git-gutter-mode t))
 
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode))
+
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-l")
