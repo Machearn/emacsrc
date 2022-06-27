@@ -111,10 +111,15 @@
 
 (use-package restart-emacs)
 
+(use-package treemacs)
+
+(use-package all-the-icons)
+
 (use-package doom-themes
   :demand t
   :config
-  (load-theme 'doom-solarized-dark t))
+  (load-theme 'doom-solarized-dark t)
+  (doom-themes-treemacs-config))
 
 (use-package company
   :demand t
@@ -136,8 +141,6 @@
         popwin:popup-window-width 0.4))
 
 (use-package magit)
-
-(use-package treemacs)
 
 (use-package evil
   :demand t
