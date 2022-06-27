@@ -104,6 +104,8 @@
 
 (use-package general)
 
+(use-package restart-emacs)
+
 (use-package doom-themes
   :demand t
   :config
