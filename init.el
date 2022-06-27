@@ -317,7 +317,7 @@
   (general-define-key "s-s" 'save-buffer)
   (set-face-attribute 'default nil
                       :family "Ubuntu Mono"
-                      :height 180
+                      :height 200
                       :weight 'normal
                       :width 'normal))
 
