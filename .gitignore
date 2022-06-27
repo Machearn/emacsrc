@@ -4,3 +4,4 @@ transient/
 *.el~
 recentf
 smex-items
+.lsp-session-v1
