@@ -100,6 +100,11 @@
 (setq-default fill-column '100)
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 
+(setq redisplay-dont-pause t
+  scroll-margin 1
+  scroll-step 1
+  scroll-conservatively 10000
+  scroll-preserve-screen-position 1)
 
 
 (use-package general)
