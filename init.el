@@ -119,7 +119,10 @@
   :demand t
   :config
   (load-theme 'doom-solarized-dark t)
-  (doom-themes-treemacs-config))
+  (doom-themes-treemacs-config)
+  (setq doom-variable-pitch-font (font-spec :family "Ubuntu Mono" :size 18)))
+
+(set-face-attribute 'variable-pitch nil :font doom-variable-pitch-font)
 
 (use-package company
   :demand t
