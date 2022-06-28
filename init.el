@@ -281,8 +281,10 @@
 (use-package lsp-ivy
   :commands lsp-ivy-workspace-symbol)
 
-;; (use-package lsp-treemacs
-;;   :commands lsp-treemacs-errors-list)
+(use-package lsp-treemacs
+  :config
+  (lsp-treemacs-sync-mode t)
+  :commands lsp-treemacs-errors-list)
 
 
 (general-define-key
