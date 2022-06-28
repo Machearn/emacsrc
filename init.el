@@ -265,6 +265,8 @@
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-l")
+  :config
+  (setq lsp-headerline-breadcrumb-enable nil)
   :hook
   ((c++-mode . lsp)
    (c-mode . lsp)
