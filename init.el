@@ -286,6 +286,9 @@
   (lsp-treemacs-sync-mode t)
   :commands lsp-treemacs-errors-list)
 
+(use-package dap-mode
+  :config
+  (dap-auto-configure-mode t))
 
 (general-define-key
  "<f5>" 'open-init-file)
