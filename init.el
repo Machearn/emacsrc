@@ -290,6 +290,11 @@
   :config
   (dap-auto-configure-mode t))
 
+(require 'dap-gdb-lldb)
+
+(setq dap-auto-configure-features '(sessions locals controls tooltip))
+
+
 (general-define-key
  "<f5>" 'open-init-file)
 (general-define-key
