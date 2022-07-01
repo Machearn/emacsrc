@@ -294,6 +294,13 @@
 
 (setq dap-auto-configure-features '(sessions locals controls tooltip))
 
+(use-package dashboard
+  :demand t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-center-content t
+	dashboard-startup-banner 'logo))
+
 
 (general-define-key
  "<f5>" 'open-init-file)
